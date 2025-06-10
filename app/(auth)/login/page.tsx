@@ -1,4 +1,5 @@
 import React from "react";
+import Input from "../../components/input";
 import Image from "next/image";
 
 function page() {
@@ -30,22 +31,10 @@ function page() {
         >
           <h1 className="text-xl font-bold">Sign in to Dev Talk Forum</h1>
           <div className="w-full">
-            <label htmlFor="email">E-mail Address</label>
-            <input
-              type="email"
-              name=""
-              id=""
-              className="bg-[#393E46] rounded-lg block w-full py-2 mt-3"
-            />
+            <Input type="email" label="E-mail Address" />
           </div>
           <div className="w-full">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name=""
-              id=""
-              className="bg-[#393E46] rounded-lg block w-full py-2 mt-3"
-            />
+            <Input type="password" label="Password" />
           </div>
           <button className="text-center w-full py-3 bg-sky-600 rounded-lg  cursor-pointer mt-4">
             Login

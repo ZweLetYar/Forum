@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Input from "./input";
 
 function navbar() {
   return (
@@ -12,11 +13,9 @@ function navbar() {
       </div>
 
       <div className="w-3/5 flex justify-center">
-        <input
-          type="text"
-          className="bg-slate-700 rounded-md w-3/5 h-10 px-5 placeholder:text-white"
-          placeholder="Search Anything Globally ..."
-        />
+        <div className="w-3/5">
+          <Input placeholder="Search Anything Globally" type="text" />
+        </div>
       </div>
       <div className="w-1/5 flex justify-center">
         <Image
