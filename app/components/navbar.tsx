@@ -1,8 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import Input from "./input";
+import { auth } from "@/auth";
 
-function navbar() {
+async function navbar() {
+  const session = await auth();
+
   return (
     <div className="flex items-center h-25">
       <div className="w-1/5 flex justify-center space-x-5 items-center">
@@ -19,7 +22,7 @@ function navbar() {
       </div>
       <div className="w-1/5 flex justify-center">
         <Image
-          src="/user.jpg"
+          src={session?.user?.image || "/default-avatar.png"}
           className="rounded-full"
           width={50}
           height={50}

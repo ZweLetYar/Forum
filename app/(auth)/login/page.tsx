@@ -26,7 +26,7 @@ function page() {
         </div>
       </div>
 
-      <div className="flex  items-center justify-center w-1/2 h-full text-lg">
+      <div className="flex flex-col gap-4 items-center justify-center w-1/2 h-full text-lg">
         <form
           action=""
           className="w-3/4 flex flex-col  justify-center space-y-5"
@@ -39,8 +39,8 @@ function page() {
             <Input type="password" label="Password" />
           </div>
           <Button type="normal">Log In</Button>
-          <AuthForm />
         </form>
+        <AuthForm />
       </div>
     </div>
   );

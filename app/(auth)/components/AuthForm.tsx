@@ -1,4 +1,5 @@
 import Button from "@/app/components/Button";
+import { signIn } from "@/auth";
 import React from "react";
 
 function AuthForm() {
@@ -39,16 +40,24 @@ function AuthForm() {
     </svg>
   );
   return (
-    <div className="flex justify-between gap-2 mt-4">
+    <div className="flex justify-between gap-2 mt-4 w-3/4">
       <div className="w-1/2">
         <Button icon={googleIcon} type="outline">
           Log in with Google
         </Button>
       </div>
       <div className="w-1/2">
-        <Button icon={gitHubIcon} type="outline">
-          Log in with GitHub
-        </Button>
+        <form
+          action={async () => {
+            "use server";
+            await signIn("github");
+          }}
+          className="w-full"
+        >
+          <Button icon={gitHubIcon} type="outline">
+            Log in with GitHub
+          </Button>
+        </form>
       </div>
     </div>
   );
