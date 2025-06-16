@@ -1,8 +1,43 @@
+"use client";
 import Button from "@/app/components/Button";
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react";
+
 import React from "react";
+import { Bounce, toast } from "react-toastify";
 
 function AuthForm() {
+  const oauthlogin = async () => {
+    try {
+      await signIn("github", { redirectTo: "/" });
+
+      toast.success("Log in Successful !", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error("Log in Failed !", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      }
+    }
+  };
+
   const googleIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -42,22 +77,14 @@ function AuthForm() {
   return (
     <div className="flex justify-between gap-2 mt-4 w-3/4">
       <div className="w-1/2">
-        <Button icon={googleIcon} type="outline">
+        <Button icon={googleIcon} variant="outline">
           Log in with Google
         </Button>
       </div>
       <div className="w-1/2">
-        <form
-          action={async () => {
-            "use server";
-            await signIn("github");
-          }}
-          className="w-full"
-        >
-          <Button icon={gitHubIcon} type="outline">
-            Log in with GitHub
-          </Button>
-        </form>
+        <Button icon={gitHubIcon} variant="outline" onClick={oauthlogin}>
+          Log in with GitHub
+        </Button>
       </div>
     </div>
   );

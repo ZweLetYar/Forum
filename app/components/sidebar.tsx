@@ -1,7 +1,29 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 
+import { signOut } from "next-auth/react";
+
+import { Bounce, toast } from "react-toastify";
+
 function sidebar() {
+  const userLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    await signOut({ redirect: false }); // prevent auto-redirect
+
+    toast.info("Log out Successful!", {
+      position: "bottom-right",
+      autoClose: 3000,
+      theme: "dark",
+      transition: Bounce,
+    });
+
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1000);
+  };
+
   return (
     <aside className="w-1/5  text-white p-6 positon-fixed border-r border-slate-700 mt-5">
       <nav className="space-y-6">
@@ -83,9 +105,9 @@ function sidebar() {
 
           <p>Popular</p>
         </Link>
-        <Link
-          href="#"
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-red-500 font-semibold hover:bg-sky-700 rounded-xl"
+        <button
+          onClick={userLogOut}
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-red-500 font-semibold hover:bg-red-600 rounded-xl"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +125,7 @@ function sidebar() {
           </svg>
 
           <p>Log out</p>
-        </Link>
+        </button>
       </nav>
     </aside>
   );
