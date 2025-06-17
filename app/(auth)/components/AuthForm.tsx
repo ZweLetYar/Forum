@@ -6,9 +6,9 @@ import React from "react";
 import { Bounce, toast } from "react-toastify";
 
 function AuthForm() {
-  const oauthlogin = async () => {
+  const oauthLogin = async (provider: "github" | "google") => {
     try {
-      await signIn("github", { redirectTo: "/" });
+      await signIn(provider, { redirectTo: "/" });
 
       toast.success("Log in Successful !", {
         position: "bottom-right",
@@ -77,12 +77,20 @@ function AuthForm() {
   return (
     <div className="flex justify-between gap-2 mt-4 w-3/4">
       <div className="w-1/2">
-        <Button icon={googleIcon} variant="outline">
+        <Button
+          icon={googleIcon}
+          variant="outline"
+          onClick={() => oauthLogin("google")}
+        >
           Log in with Google
         </Button>
       </div>
       <div className="w-1/2">
-        <Button icon={gitHubIcon} variant="outline" onClick={oauthlogin}>
+        <Button
+          icon={gitHubIcon}
+          variant="outline"
+          onClick={() => oauthLogin("github")}
+        >
           Log in with GitHub
         </Button>
       </div>

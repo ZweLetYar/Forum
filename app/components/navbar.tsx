@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 
 async function navbar() {
   const session = await auth();
+  console.log(session);
 
   return (
     <div className="flex items-center h-25">
