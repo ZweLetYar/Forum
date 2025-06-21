@@ -5,8 +5,9 @@ import React from "react";
 import { signOut } from "next-auth/react";
 
 import { Bounce, toast } from "react-toastify";
+import ROUTES from "@/routes";
 
-function sidebar() {
+function LeftSidebar() {
   const userLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -28,7 +29,7 @@ function sidebar() {
     <aside className="w-1/5  text-white p-6 positon-fixed border-r border-slate-700 mt-5">
       <nav className="space-y-6">
         <Link
-          href="#"
+          href={ROUTES.HOME}
           className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
         >
           <svg
@@ -41,6 +42,32 @@ function sidebar() {
             <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
           </svg>
           <p>Home</p>
+        </Link>
+        <Link
+          href={ROUTES.HOME}
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 6h.008v.008H6V6Z"
+            />
+          </svg>
+
+          <p>Tags</p>
         </Link>
         <Link
           href="#"
@@ -64,7 +91,7 @@ function sidebar() {
           <p>Newest</p>
         </Link>
         <Link
-          href="#"
+          href={ROUTES.QUESTIONS}
           className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
         >
           <svg
@@ -82,7 +109,7 @@ function sidebar() {
             />
           </svg>
 
-          <p>Add a new discussion</p>
+          <p>Add a new questions</p>
         </Link>
         <Link
           href="#"
@@ -131,4 +158,4 @@ function sidebar() {
   );
 }
 
-export default sidebar;
+export default LeftSidebar;

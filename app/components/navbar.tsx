@@ -1,11 +1,11 @@
 import Image from "next/image";
 import React from "react";
-import Input from "./input";
+
 import { auth } from "@/auth";
+import SearchInput from "./SearchInput";
 
 async function navbar() {
   const session = await auth();
-  console.log(session);
 
   return (
     <div className="flex items-center h-25">
@@ -18,7 +18,7 @@ async function navbar() {
 
       <div className="w-3/5 flex justify-center">
         <div className="w-3/5">
-          <Input placeholder="Search Anything Globally" type="text" />
+          <SearchInput />
         </div>
       </div>
       <div className="w-1/5 flex justify-center">

@@ -4,15 +4,17 @@ function input({
   placeholder,
   label,
   type,
+  ...props
 }: {
   placeholder?: string;
   label?: string;
   type: string;
-}) {
+} & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
       {label && <label htmlFor="">{label}</label>}
       <input
+        {...props}
         type={type}
         name=""
         id=""

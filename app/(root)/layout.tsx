@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "../components/navbar";
-import Sidebar from "../components/sidebar";
+import LeftSidebar from "../components/LeftSidebar";
+import RightSidebar from "../components/RightSidebar";
 function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#222831]">
+    <div className="min-h-screen bg-[#222831] text-white">
       <Navbar />
       <div className="flex">
-        <Sidebar />
-        <main className="w-4/5">{children}</main>
+        <LeftSidebar />
+        <main className="w-3/5">{children}</main>
+        <RightSidebar />
       </div>
     </div>
   );
