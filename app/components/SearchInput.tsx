@@ -18,11 +18,14 @@ function SearchInput() {
       ...currentQuery,
       search: debouncedSearch,
     };
-    console.log(updatedQuery);
-    const url = queryString.stringifyUrl({
-      url: window.location.pathname,
-      query: updatedQuery,
-    });
+
+    const url = queryString.stringifyUrl(
+      {
+        url: window.location.pathname,
+        query: updatedQuery,
+      },
+      { skipNull: true, skipEmptyString: true }
+    );
     router.push(url);
   }, [debouncedSearch, router]);
 
