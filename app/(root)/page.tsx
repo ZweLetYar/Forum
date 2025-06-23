@@ -1,5 +1,7 @@
-import { auth } from "@/auth";
 import Filter from "../components/Filter";
+import Button from "../components/Button";
+
+import ThreadCard from "../components/ThreadCard";
 
 export default async function page({
   searchParams,
@@ -8,13 +10,15 @@ export default async function page({
 }) {
   const { search } = await searchParams;
 
-  const session = await auth();
-
   return (
-    <div className="px-5">
-      <div className="flex gap-3 items-center text-xl font-bold ">
-        Hi
-        <span className="text-sky-400 ">{session?.user?.name}</span>
+    <div className="px-5 flex flex-col gap-3">
+      <div className=" flex items-center n">
+        <h1 className="text-2xl font-extrabold text-sky-500 mr-auto">
+          All Threads
+        </h1>
+        <Button variant="normal" className="ml-auto w-[20%]">
+          Create Thread
+        </Button>
       </div>
       {!!search && (
         <>
@@ -22,6 +26,7 @@ export default async function page({
         </>
       )}
       <Filter />
+      <ThreadCard />
     </div>
   );
 }

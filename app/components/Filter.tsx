@@ -1,11 +1,12 @@
 "use client";
 
 import queryString from "query-string";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 function Filter() {
-  const [active, setActive] = useState("");
+  const searchParams = useSearchParams();
+  const [active, setActive] = useState(searchParams.get("filter") || "");
   const router = useRouter();
 
   const handleFilter = (filter: string) => {
@@ -31,7 +32,7 @@ function Filter() {
     router.push(url);
   };
   return (
-    <div className="flex gap-2 items-center mt-2">
+    <div className="flex gap-2 items-center mt-2 text-gray-300">
       <button
         onClick={() => handleFilter("React")}
         className={` text-white px-3 py-1 rounded-md cursor-pointer ${
@@ -47,6 +48,14 @@ function Filter() {
         }`}
       >
         Vue
+      </button>
+      <button
+        onClick={() => handleFilter("Next")}
+        className={` text-white px-3 py-1 rounded-md cursor-pointer ${
+          active === "Next" ? "bg-sky-400" : "bg-slate-700"
+        }`}
+      >
+        Next
       </button>
     </div>
   );
