@@ -7,7 +7,7 @@ import AuthForm from "../components/AuthForm";
 function page() {
   return (
     <div className="flex  h-screen bg-[#222831] text-white">
-      <div className="flex flex-col items-center justify-center text-lg space-y-10 w-1/2 bg-[#393E46] h-full ">
+      <div className="flex flex-col items-center justify-center text-lg space-y-10 w-1/2  h-full ">
         <div className="flex space-x-5 items-center">
           <Image src="/logo.png" width={100} height={100} alt="logo" />
           <h1 className="text-6xl font-bold text-white">
@@ -26,7 +26,7 @@ function page() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 items-center justify-center w-1/2 h-full text-lg">
+      <div className="flex flex-col gap-4 items-center justify-center w-1/2 h-full text-lg bg-slate-800">
         <form
           action=""
           className="w-3/4 flex flex-col  justify-center space-y-5"

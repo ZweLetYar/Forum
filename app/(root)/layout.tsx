@@ -4,7 +4,7 @@ import LeftSidebar from "../components/LeftSidebar";
 import RightSidebar from "../components/RightSidebar";
 function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#222831] text-white">
+    <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
       <div className="flex">
         <LeftSidebar />

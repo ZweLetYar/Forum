@@ -45,7 +45,7 @@ const Editor = ({
       attributes: {
         // because I don't have tailwind.config file
         class:
-          "tiptap prose prose-invert m-3 p-2 rounded-xl bg-slate-900 min-h-[300px]",
+          "tiptap prose prose-invert  rounded-xl bg-slate-800 min-h-[300px] p-3",
       },
     },
     extensions: [
@@ -191,7 +191,7 @@ const Editor = ({
   return (
     <>
       <div className="ms-3 mb-2">
-        {label && <label className=" font-bold text-lg">{label}</label>}
+        {label && <label className=" font-semibold ">{label}</label>}
       </div>
       <div className="flex items-start ms-3 gap-2">
         <button
