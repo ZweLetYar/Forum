@@ -30,7 +30,15 @@ lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
 
-const Editor = () => {
+const Editor = ({
+  value,
+  onChange,
+  label,
+}: {
+  value?: string;
+  onChange?: (value: string) => void;
+  label?: string;
+}) => {
   const editor = useEditor({
     editorProps: {
       //the heading is actually changed . but doesn't change in UI
@@ -130,7 +138,10 @@ const Editor = () => {
         lowlight,
       }),
     ],
-    content: "<p>Hello World! 🌎️</p>",
+    content: value,
+    onUpdate: ({ editor }) => {
+      onChange?.(editor.getHTML());
+    },
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   });
@@ -179,6 +190,9 @@ const Editor = () => {
 
   return (
     <>
+      <div className="ms-3 mb-2">
+        {label && <label className=" font-bold text-lg">{label}</label>}
+      </div>
       <div className="flex items-start ms-3 gap-2">
         <button
           onClick={() => editor?.chain().focus().toggleBold().run()}

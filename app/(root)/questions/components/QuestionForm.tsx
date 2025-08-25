@@ -1,8 +1,19 @@
+"use client";
 import Editor from "@/app/components/Editor";
-import React from "react";
+import React, { useState } from "react";
 
 function QuestionForm() {
-  return <Editor />;
+  const [value, setValue] = useState("");
+  return (
+    <>
+      {value}
+      <Editor
+        label="Any Question?"
+        value={value}
+        onChange={(v) => setValue(v)}
+      />
+    </>
+  );
 }
 
 export default QuestionForm;
