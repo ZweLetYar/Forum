@@ -6,7 +6,7 @@ import TagCard from "./TagCard";
 function ThreadCard() {
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-3  rounded-md bg-[#393E46] p-4">
+      <div className="flex flex-col gap-3  rounded-md bg-slate-800 p-4">
         <h1>What is react js? How does it work?</h1>
         <div className="flex gap-2 items-center text-gray-300">
           <TagCard href="/?filter=Vue">Vue</TagCard>

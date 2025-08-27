@@ -28,6 +28,9 @@ export default async function page({
       )}
       <Filter />
       <ThreadCard />
+      <ThreadCard />
+      <ThreadCard />
+      <ThreadCard />
     </div>
   );
 }

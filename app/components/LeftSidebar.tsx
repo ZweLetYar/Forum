@@ -26,7 +26,7 @@ function LeftSidebar() {
   };
 
   return (
-    <aside className="w-1/5  text-white p-6 positon-fixed border-r border-slate-700 mt-5">
+    <aside className="w-1/5  text-white p-6 positon-fixed border-r border-slate-700 mt-5 h-[523px]">
       <nav className="space-y-6">
         <Link
           href={ROUTES.HOME}
