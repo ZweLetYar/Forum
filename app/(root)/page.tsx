@@ -1,7 +1,8 @@
 import Filter from "../components/Filter";
-import Button from "../components/Button";
 
 import ThreadCard from "../components/ThreadCard";
+import ButtonLink from "../components/ButtonLink";
+import ROUTES from "@/routes";
 
 export default async function page({
   searchParams,
@@ -16,9 +17,9 @@ export default async function page({
         <h1 className="text-2xl font-extrabold text-sky-500 mr-auto">
           All Threads
         </h1>
-        <Button variant="normal" className="ml-auto w-[20%]">
+        <ButtonLink variant="normal" href={ROUTES.QUESTIONS_CREATE}>
           Create Thread
-        </Button>
+        </ButtonLink>
       </div>
       {!!search && (
         <>

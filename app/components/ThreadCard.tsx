@@ -1,6 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
+
 import React from "react";
+import TagCard from "./TagCard";
 
 function ThreadCard() {
   return (
@@ -8,18 +9,9 @@ function ThreadCard() {
       <div className="flex flex-col gap-3  rounded-md bg-[#393E46] p-4">
         <h1>What is react js? How does it work?</h1>
         <div className="flex gap-2 items-center text-gray-300">
-          <Link
-            href={"/?filter=React"}
-            className="text-white px-3 py-1 rounded-md cursor-pointer  bg-slate-700"
-          >
-            React
-          </Link>
-          <Link
-            href={"/?filter=JavaScript"}
-            className="text-white px-3 py-1 rounded-md cursor-pointer  bg-slate-700"
-          >
-            JavaScript
-          </Link>
+          <TagCard href="/?filter=Vue">Vue</TagCard>
+          <TagCard href="/?filter=React">React</TagCard>
+          <TagCard href="/?filter=JavaScript">JavaScript</TagCard>
         </div>
         <div className="flex items-center text-xs text-gray-300">
           <div className="flex items-center gap-1 mr-auto">
