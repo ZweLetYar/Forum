@@ -2,29 +2,39 @@ import User from "@/database/user.model";
 import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
+//define function
+const handleSuccessResponse = (data: unknown, status: number = 200) => {
+  const total = Array.isArray(data) ? data.length : 1;
+  return NextResponse.json(
+    {
+      meta: {
+        total,
+      },
+      data,
+      sucess: true,
+    },
+    { status }
+  );
+};
+//define function
+const handleErrorResponse = (e: unknown, status: number = 500) => {
+  return NextResponse.json(
+    {
+      message: e instanceof Error ? e.message : "Something went wrong!",
+      success: false,
+    },
+    { status }
+  );
+};
+
 //get all users
 export async function GET() {
   try {
     await dbConnect();
     const users = await User.find();
-    return NextResponse.json(
-      {
-        meta: {
-          total: users.length,
-        },
-        data: users,
-        sucess: true,
-      },
-      { status: 200 }
-    );
+    return handleSuccessResponse(users, 200); //function call
   } catch (e: unknown) {
-    return NextResponse.json(
-      {
-        message: e instanceof Error ? e.message : "Something went wrong!",
-        success: false,
-      },
-      { status: 500 }
-    );
+    return handleErrorResponse(e, 500); //function call
   }
 }
 
@@ -41,21 +51,8 @@ export async function POST(req: Request) {
     if (existingUserName) throw new Error("Username already exists");
 
     const newUser = await User.create(body);
-    return NextResponse.json(
-      {
-        data: newUser,
-        sucess: true,
-        status: 201,
-      },
-      { status: 201 }
-    );
+    return handleSuccessResponse(newUser, 201); //function call
   } catch (e: unknown) {
-    return NextResponse.json(
-      {
-        message: e instanceof Error ? e.message : "Something went wrong!",
-        success: false,
-      },
-      { status: 500 }
-    );
+    return handleErrorResponse(e, 500); //function call
   }
 }
