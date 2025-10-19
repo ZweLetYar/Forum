@@ -21,7 +21,10 @@ const handleErrorResponse = (e: unknown) => {
   let status = 500;
   let details = null;
 
-  if (e && (e as any).constructor?.name === "ZodError") {
+  if (
+    e &&
+    (e as { constructor?: { name?: string } }).constructor?.name === "ZodError"
+  ) {
     const zodError = e as ZodError;
     details = zodError.flatten().fieldErrors;
     status = 400;
@@ -32,6 +35,5 @@ const handleErrorResponse = (e: unknown) => {
 
   return NextResponse.json({ details, message, success: false }, { status });
 };
-
 
 export { handleSuccessResponse, handleErrorResponse };
