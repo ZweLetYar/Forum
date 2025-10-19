@@ -1,6 +1,7 @@
 import User from "@/database/user.model";
 import dbConnect from "@/lib/dbConnect";
 import { handleSuccessResponse, handleErrorResponse } from "@/lib/response";
+import UserSchema from "@/lib/schemas/UserSchema";
 
 //get all users
 export async function GET() {
@@ -9,7 +10,7 @@ export async function GET() {
     const users = await User.find();
     return handleSuccessResponse(users, 200); //function call
   } catch (e: unknown) {
-    return handleErrorResponse(e, 500); //function call
+    return handleErrorResponse(e); //function call
   }
 }
 
@@ -17,7 +18,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    const body = await req.json();
+    const body = UserSchema.parse(await req.json()); // auto-throws ZodError
 
     const existingEmail = await User.findOne({ email: body.email });
     if (existingEmail) throw new Error("Email already exists");
@@ -26,8 +27,9 @@ export async function POST(req: Request) {
     if (existingUserName) throw new Error("Username already exists");
 
     const newUser = await User.create(body);
-    return handleSuccessResponse(newUser, 201); //function call
+    return handleSuccessResponse(newUser, 201);
   } catch (e: unknown) {
-    return handleErrorResponse(e, 500); //function call
+    return handleErrorResponse(e);
   }
 }
+

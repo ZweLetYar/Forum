@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 //define function
 const handleSuccessResponse = (data: unknown, status: number = 200) => {
@@ -15,14 +16,22 @@ const handleSuccessResponse = (data: unknown, status: number = 200) => {
   );
 };
 //define function
-const handleErrorResponse = (e: unknown, status: number = 500) => {
-  return NextResponse.json(
-    {
-      message: e instanceof Error ? e.message : "Something went wrong!",
-      success: false,
-    },
-    { status }
-  );
+const handleErrorResponse = (e: unknown) => {
+  let message = "Internal server error";
+  let status = 500;
+  let details = null;
+
+  if (e && (e as any).constructor?.name === "ZodError") {
+    const zodError = e as ZodError;
+    details = zodError.flatten().fieldErrors;
+    status = 400;
+    message = "Validation error";
+  } else if (e instanceof Error) {
+    message = e.message;
+  }
+
+  return NextResponse.json({ details, message, success: false }, { status });
 };
+
 
 export { handleSuccessResponse, handleErrorResponse };
