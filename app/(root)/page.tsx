@@ -1,19 +1,22 @@
+// "use client";
+
 import Filter from "../components/Filter";
 
 import ThreadCard from "../components/ThreadCard";
 import ButtonLink from "../components/ButtonLink";
 import ROUTES from "@/routes";
-import fetchHandler from "@/lib/fetchHandler";
+
+import { api } from "@/lib/api";
+import Button from "../components/Button";
 
 export default async function page({
   searchParams,
 }: {
   searchParams: Promise<{ search: string | undefined }>;
 }) {
-  const res = await fetchHandler("http://localhost:3000/api/users");
-  console.log(res);
-
+  // const id = "68f0bbefa3c122d5d98497aa";
   const { search } = await searchParams;
+  const { data } = await api.users.getByEmail("zly@gmail.com");
 
   return (
     <div className="px-5 flex flex-col gap-3">
@@ -34,6 +37,9 @@ export default async function page({
       <ThreadCard />
       <ThreadCard />
       <ThreadCard />
+
+      {data && <p>{data.username}</p>}
+      {/* <Button onClick={() => api.users.delete(id)}>Delete User</Button> */}
     </div>
   );
 }

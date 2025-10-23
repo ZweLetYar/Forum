@@ -22,7 +22,7 @@ function page() {
           aliquip ex ea commodo consequat.
         </p>
         <div className="w-5/6">
-          <Button type="outline">Log In</Button>
+          <Button variant="outline">Log In</Button>
         </div>
       </div>
 
@@ -44,7 +44,7 @@ function page() {
           <div className="w-full">
             <Input type="password" label="Password" />
           </div>
-          <Button type="normal">Register</Button>
+          <Button variant="normal">Register</Button>
         </form>
         <AuthForm />
       </div>
