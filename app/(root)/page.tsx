@@ -3,12 +3,16 @@ import Filter from "../components/Filter";
 import ThreadCard from "../components/ThreadCard";
 import ButtonLink from "../components/ButtonLink";
 import ROUTES from "@/routes";
+import fetchHandler from "@/lib/fetchHandler";
 
 export default async function page({
   searchParams,
 }: {
   searchParams: Promise<{ search: string | undefined }>;
 }) {
+  const res = await fetchHandler("http://localhost:3000/api/users");
+  console.log(res);
+
   const { search } = await searchParams;
 
   return (
@@ -27,7 +31,6 @@ export default async function page({
         </>
       )}
       <Filter />
-      <ThreadCard />
       <ThreadCard />
       <ThreadCard />
       <ThreadCard />
