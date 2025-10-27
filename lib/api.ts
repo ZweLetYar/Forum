@@ -48,7 +48,7 @@ export const api = {
       }),
   },
 
-  //--------------Accounts session------------------------------
+  //--------------Accounts session--------------------
 
   accounts: {
     //to use api.accounts.getAll()
@@ -99,6 +99,34 @@ export const api = {
     delete: (id: string) =>
       fetchHandler(API_URL + "/accounts/" + id, {
         method: "DELETE",
+      }),
+  },
+
+  //---------------Oauth session----------------------
+
+  auth: {
+    //to use api.auth.signInwithOauth(provider,providerAccountId,userInfo)
+    signInWithOauth: ({
+      provider,
+      providerAccountId,
+      user,
+    }: {
+      provider: string;
+      providerAccountId: string;
+      user: {
+        name: string;
+        username: string;
+        email: string;
+        image: string;
+      };
+    }) =>
+      fetchHandler(API_URL + "/auth/signin-with-oauth", {
+        method: "POST",
+        body: JSON.stringify({
+          provider,
+          providerAccountId,
+          user,
+        }),
       }),
   },
 };
