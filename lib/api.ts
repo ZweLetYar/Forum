@@ -14,7 +14,7 @@ export const api = {
       name: string;
       username: string;
       email: string;
-      image: string;
+      image?: string;
     }) =>
       fetchHandler(API_URL + "/users", {
         method: "POST",
@@ -58,7 +58,7 @@ export const api = {
     create: (data: {
       userId: string;
       name: string;
-      image: string;
+      image?: string;
       password: string;
       provider: string;
       providerAccountId: string;
