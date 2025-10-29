@@ -72,10 +72,10 @@ export const api = {
     getById: (id: string) => fetchHandler(API_URL + "/accounts/" + id),
 
     //to use getByProviderAccountId(id)
-    getByProviderAccountId: (id: string) =>
+    getByProviderAccountId: (providerAccountId: string) =>
       fetchHandler(API_URL + "/accounts/providerId", {
         method: "POST",
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ providerAccountId }),
       }),
 
     //to use api.accounts.update(id,data)
@@ -115,9 +115,10 @@ export const api = {
       providerAccountId: string;
       user: {
         name: string;
-        username: string;
+
         email: string;
         image: string;
+        username: string;
       };
     }) =>
       fetchHandler(API_URL + "/auth/signin-with-oauth", {

@@ -10,7 +10,7 @@ const handleSuccessResponse = (data: unknown, status: number = 200) => {
         total,
       },
       data,
-      sucess: true,
+      success: true,
     },
     { status }
   );

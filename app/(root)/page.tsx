@@ -8,6 +8,7 @@ import ROUTES from "@/routes";
 
 import { api } from "@/lib/api";
 import Button from "../components/Button";
+import { auth } from "@/auth";
 
 export default async function page({
   searchParams,
@@ -15,6 +16,9 @@ export default async function page({
   searchParams: Promise<{ search: string | undefined }>;
 }) {
   // const id = "68f0bbefa3c122d5d98497aa";
+
+  const session = await auth();
+  console.log(session?.user);
   const { search } = await searchParams;
   const { data } = await api.users.getByEmail("zly@gmail.com");
 
