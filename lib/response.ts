@@ -35,5 +35,25 @@ const handleErrorResponse = (e: unknown) => {
 
   return NextResponse.json({ details, message, success: false }, { status });
 };
+//define function
+const actionError = (e: unknown) => {
+  let message = "Internal server error";
 
-export { handleSuccessResponse, handleErrorResponse };
+  let details = null;
+
+  if (
+    e &&
+    (e as { constructor?: { name?: string } }).constructor?.name === "ZodError"
+  ) {
+    const zodError = e as ZodError;
+    details = zodError.flatten().fieldErrors;
+
+    message = "Validation error";
+  } else if (e instanceof Error) {
+    message = e.message;
+  }
+
+  return { details, message, success: false };
+};
+
+export { handleSuccessResponse, handleErrorResponse, actionError };

@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import dbConnect from "../dbConnect";
-import { handleErrorResponse, handleSuccessResponse } from "../response";
+import { actionError } from "../response";
 import validateBody from "../vaildateBody";
 import SignupSchema from "../schemas/SignupSchema";
 import User from "@/database/user.model";
@@ -32,7 +32,7 @@ export async function SignUpWithCredentials(params: {
 
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-      throw new Error("Username already exists");
+      throw new Error("Username already exists!");
     }
 
     const [newUser] = await User.create(
@@ -58,10 +58,10 @@ export async function SignUpWithCredentials(params: {
 
     await session.commitTransaction();
     await signIn("credentials", { email, password, redirect: false });
-    return handleSuccessResponse(newUser);
+    return { success: true };
   } catch (e) {
     await session.abortTransaction();
-    return handleErrorResponse(e);
+    return actionError(e);
   } finally {
     await session.endSession();
   }

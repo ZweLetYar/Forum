@@ -14,9 +14,7 @@ const SignupSchema = z.object({
     .string()
     .min(3, { message: "Username should be at least 3 characters" })
     .max(30, { message: "Username should be less than 30 characters" })
-    .regex(/^[a-zA-Z\s]+$/, {
-      message: "Name can only contain letters and spaces",
-    })
+
     .toLowerCase(),
 
   email: z
