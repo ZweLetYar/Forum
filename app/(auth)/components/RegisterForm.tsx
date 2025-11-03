@@ -81,7 +81,7 @@ function RegisterForm() {
       <div className="w-full">
         <Input
           type="text"
-          label="Name"
+          placeholder="Name"
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, name: e.target.value }))
           }
@@ -93,7 +93,7 @@ function RegisterForm() {
       <div className="w-full">
         <Input
           type="text"
-          label="Username"
+          placeholder="Username"
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, username: e.target.value }))
           }
@@ -105,7 +105,7 @@ function RegisterForm() {
       <div className="w-full">
         <Input
           type="email"
-          label="E-mail Address"
+          placeholder="E-mail Address"
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, email: e.target.value }))
           }
@@ -117,7 +117,7 @@ function RegisterForm() {
       <div className="w-full">
         <Input
           type="password"
-          label="Password"
+          placeholder="Password"
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, password: e.target.value }))
           }
