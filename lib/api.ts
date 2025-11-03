@@ -7,7 +7,7 @@ export const api = {
 
   users: {
     //to use api.users.getAll()
-    getAll: () => fetchHandler(API_URL + "/users"),
+    getAll: () => fetchHandler(API_URL + "/users", { method: "GET" }),
 
     //to use api.users.create()
     create: (data: {
@@ -22,7 +22,8 @@ export const api = {
       }),
 
     //to use api.users.getById(id)
-    getById: (id: string) => fetchHandler(API_URL + "/users/" + id),
+    getById: (id: string) =>
+      fetchHandler(API_URL + "/users/" + id, { method: "GET" }),
 
     //to use getByEmail(email)
     getByEmail: (email: string) =>

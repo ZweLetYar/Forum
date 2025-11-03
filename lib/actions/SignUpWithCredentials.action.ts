@@ -8,7 +8,7 @@ import SignupSchema from "../schemas/SignupSchema";
 import User from "@/database/user.model";
 import Account from "@/database/account.model";
 import bcrypt from "bcryptjs";
-import { signIn } from "@/auth";
+//import { signIn } from "@/auth";
 
 export async function SignUpWithCredentials(params: {
   name: string;
@@ -32,7 +32,7 @@ export async function SignUpWithCredentials(params: {
 
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-      throw new Error("Username already exists!");
+      throw new Error("Username already exists");
     }
 
     const [newUser] = await User.create(
@@ -46,21 +46,30 @@ export async function SignUpWithCredentials(params: {
       { session }
     );
 
-    await Account.create([
-      {
-        userId: newUser._id,
-        name,
-        password: await bcrypt.hash(password, 10),
-        provider: "credentials",
-        providerAccountId: email,
-      },
-    ]);
+    await Account.create(
+      [
+        {
+          userId: newUser._id,
+          name,
+          password: await bcrypt.hash(password, 10),
+          provider: "credentials",
+          providerAccountId: email,
+        },
+      ],
+      { session }
+    );
 
     await session.commitTransaction();
-    await signIn("credentials", { email, password, redirect: false });
+    // Optionally sign the user in here. Keep commented unless `signIn` is
+    // available/imported.
+    //await signIn("credentials", { email, password, redirect: false });
+
     return { success: true };
   } catch (e) {
-    await session.abortTransaction();
+    // Abort the transaction only if it's still active.
+    if (session.inTransaction && session.inTransaction()) {
+      await session.abortTransaction();
+    }
     return actionError(e);
   } finally {
     await session.endSession();

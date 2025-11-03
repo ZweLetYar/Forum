@@ -7,6 +7,7 @@ import { SignUpWithCredentials } from "@/lib/actions/SignUpWithCredentials.actio
 
 import ROUTES from "@/routes";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 //type definition for formData
 interface FormData {
@@ -42,6 +43,11 @@ function RegisterForm() {
     let result = await SignUpWithCredentials(formData);
 
     if (result.success) {
+      await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
       router.push(ROUTES.HOME);
     } else {
       console.log(result);

@@ -18,9 +18,8 @@ export default async function page({
   // const id = "68f0bbefa3c122d5d98497aa";
 
   const session = await auth();
-  console.log(session?.user);
+  console.log(session);
   const { search } = await searchParams;
-  const { data } = await api.users.getByEmail("zly@gmail.com");
 
   return (
     <div className="px-5 flex flex-col gap-3">
@@ -42,7 +41,7 @@ export default async function page({
       <ThreadCard />
       <ThreadCard />
 
-      {data && <p>{data.username}</p>}
+      {session && <p>{session?.user?.name}</p>}
       {/* <Button onClick={() => api.users.delete(id)}>Delete User</Button> */}
     </div>
   );

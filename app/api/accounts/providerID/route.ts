@@ -1,7 +1,7 @@
 import Account from "@/database/account.model";
 import { handleErrorResponse, handleSuccessResponse } from "@/lib/response";
 
-//Find User by Email API
+//Find User by providerAccountId API
 export async function POST(req: Request) {
   try {
     const { providerAccountId } = await req.json();
