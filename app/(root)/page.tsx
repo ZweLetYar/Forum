@@ -6,8 +6,6 @@ import ThreadCard from "../components/ThreadCard";
 import ButtonLink from "../components/ButtonLink";
 import ROUTES from "@/routes";
 
-import { api } from "@/lib/api";
-import Button from "../components/Button";
 import { auth } from "@/auth";
 
 export default async function page({
@@ -15,8 +13,6 @@ export default async function page({
 }: {
   searchParams: Promise<{ search: string | undefined }>;
 }) {
-  // const id = "68f0bbefa3c122d5d98497aa";
-
   const session = await auth();
   console.log(session);
   const { search } = await searchParams;

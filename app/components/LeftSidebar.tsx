@@ -1,29 +1,13 @@
-"use client";
 import Link from "next/link";
 import React from "react";
 
-import { signOut } from "next-auth/react";
-
-import { Bounce, toast } from "react-toastify";
 import ROUTES from "@/routes";
+import { redirect } from "next/navigation";
+import { auth, signOut } from "@/auth";
 
-function LeftSidebar() {
-  const userLogOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    await signOut({ redirect: false }); // prevent auto-redirect
-
-    toast.info("Log out Successful!", {
-      position: "bottom-right",
-      autoClose: 3000,
-      theme: "dark",
-      transition: Bounce,
-    });
-
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 1000);
-  };
+async function LeftSidebar() {
+  const session = await auth();
+  const user = session?.user;
 
   return (
     <aside className="w-1/5  text-white p-6 positon-fixed border-r border-slate-700 mt-5 h-[523px]">
@@ -132,27 +116,67 @@ function LeftSidebar() {
 
           <p>Popular</p>
         </Link>
-        <button
-          onClick={userLogOut}
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-red-500 font-semibold hover:bg-red-600 rounded-xl"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-5"
+        {user ? (
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirect: false }); // prevent auto-redirect
+              redirect(ROUTES.LOGIN);
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-            />
-          </svg>
+            <button
+              type="submit"
+              className="flex items-center space-x-4 h-12  w-full mx-2 px-3 border border-red-500 font-semibold hover:bg-red-400 rounded-xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                />
+              </svg>
 
-          <p>Log out</p>
-        </button>
+              <p>Log out</p>
+            </button>
+          </form>
+        ) : (
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirect: false }); // prevent auto-redirect
+              redirect(ROUTES.LOGIN);
+            }}
+          >
+            <Link
+              href={ROUTES.LOGIN}
+              className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-sky-500 font-semibold hover:bg-sky-600 rounded-xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                />
+              </svg>
+
+              <p>Log in</p>
+            </Link>
+          </form>
+        )}
       </nav>
     </aside>
   );

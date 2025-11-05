@@ -9,7 +9,7 @@ function page() {
     <div className="flex  h-screen bg-[#222831] text-white">
       <div className="flex flex-col items-center justify-center text-lg space-y-10 w-1/2  h-full ">
         <div className="flex space-x-5 items-center">
-          <Image src="/logo.png" width={100} height={100} alt="logo" />
+          <Image src="/logo2.png" width={100} height={100} alt="logo" />
           <h1 className="text-6xl font-bold text-white">
             Dev <span className="text-sky-400">Talk</span> Forum
           </h1>
