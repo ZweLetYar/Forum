@@ -3,12 +3,22 @@ import Button from "@/app/components/Button";
 import Editor from "@/app/components/Editor";
 import Input from "@/app/components/input";
 import TagCard from "@/app/components/TagCard";
+import { QuestionCreate } from "@/lib/actions/QuestionCreate.action";
+import ROUTES from "@/routes";
+import { useRouter } from "next/navigation";
+
 import React, { useState } from "react";
+import { Bounce, toast } from "react-toastify";
 
 function QuestionForm() {
-  const [value, setValue] = useState("");
-  const [tags, setTags] = useState<string[]>(["react", "vue"]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
   const [newTags, setNewTags] = useState("");
+
+  let router = useRouter();
+
+  //---------------for tags input----------------
   const handleEnterPress = (e: KeyboardEvent) => {
     if (e.key === "Enter" && !tags.includes(newTags)) {
       setTags([...tags, newTags]);
@@ -19,20 +29,70 @@ function QuestionForm() {
     }
   };
 
+  //----------------for question create----------------
+  const handleQuestionCreate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const result = await QuestionCreate({
+        title,
+        content,
+        tags,
+      });
+
+      if (result.success && result.data) {
+        toast.success("Question created successfully", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+
+        router.push(ROUTES.QUESTION_DETAILS(result.data?._id));
+      }
+
+      // throw new Error("Failed to create question");
+    } catch (e: any) {
+      toast.error(e.message || "Failed to create question", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-3 m-3 p-2">
+      <form
+        className="flex flex-col gap-3 m-3 p-2"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
+        onSubmit={handleQuestionCreate}
+      >
         <h1 className="text-lg font-bold">Ask A New Question</h1>
         <Input
           type="text"
           label="Title"
           text="Describe your question title in short way"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
 
         <Editor
           label="Any Question?"
-          value={value}
-          onChange={(v) => setValue(v)}
+          value={content}
+          onChange={(v) => setContent(v)}
         />
         <Input
           value={newTags}
@@ -52,8 +112,10 @@ function QuestionForm() {
           ))}
         </div>
 
-        <Button variant="normal">Create</Button>
-      </div>
+        <Button variant="normal" type="submit">
+          Create
+        </Button>
+      </form>
     </>
   );
 }
