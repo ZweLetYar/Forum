@@ -3,6 +3,7 @@ import Button from "@/app/components/Button";
 import Editor from "@/app/components/Editor";
 import Input from "@/app/components/input";
 import TagCard from "@/app/components/TagCard";
+import { IQuestion } from "@/database/question.model";
 import { QuestionCreate } from "@/lib/actions/QuestionCreate.action";
 import ROUTES from "@/routes";
 import { useRouter } from "next/navigation";
@@ -10,10 +11,18 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Bounce, toast } from "react-toastify";
 
-function QuestionForm() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+function QuestionForm({
+  question,
+  isEdit = false,
+}: {
+  question: IQuestion;
+  isEdit: boolean;
+}) {
+  const [title, setTitle] = useState(question?.title ?? "");
+  const [content, setContent] = useState(question?.content ?? "");
+  const [tags, setTags] = useState<string[]>(
+    question?.tags.map((tag) => tag.name)
+  );
   const [newTags, setNewTags] = useState("");
 
   let router = useRouter();
