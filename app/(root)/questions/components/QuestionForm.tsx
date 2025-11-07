@@ -5,6 +5,7 @@ import Input from "@/app/components/input";
 import TagCard from "@/app/components/TagCard";
 import { IQuestion } from "@/database/question.model";
 import { QuestionCreate } from "@/lib/actions/QuestionCreate.action";
+import { QuestionEdit } from "@/lib/actions/QuestionEdit.action";
 import ROUTES from "@/routes";
 import { useRouter } from "next/navigation";
 
@@ -42,6 +43,32 @@ function QuestionForm({
   const handleQuestionCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      if (isEdit && question) {
+        const result = await QuestionEdit({
+          id: question._id as string,
+          title,
+          content,
+          tags,
+        });
+
+        if (result.success && result.data) {
+          toast.success("Question edited successfully", {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
+
+          router.push(ROUTES.QUESTION_DETAILS(result.data?._id));
+        }
+        return;
+      }
+
       const result = await QuestionCreate({
         title,
         content,
@@ -122,7 +149,7 @@ function QuestionForm({
         </div>
 
         <Button variant="normal" type="submit">
-          Create
+          {isEdit ? "Edit" : "Create"}
         </Button>
       </form>
     </>
