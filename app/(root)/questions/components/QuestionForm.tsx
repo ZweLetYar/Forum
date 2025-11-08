@@ -2,6 +2,7 @@
 import Button from "@/app/components/Button";
 import Editor from "@/app/components/Editor";
 import Input from "@/app/components/input";
+import RemovableTagCard from "@/app/components/RemovableTagCard";
 import TagCard from "@/app/components/TagCard";
 import { IQuestion } from "@/database/question.model";
 import { QuestionCreate } from "@/lib/actions/QuestionCreate.action";
@@ -107,6 +108,13 @@ function QuestionForm({
     }
   };
 
+  //------------------------------
+  let removeTag = (tag: string) => {
+    setTags((prevTags) => {
+      return prevTags.filter((eachTag) => eachTag != tag);
+    });
+  };
+
   return (
     <>
       <form
@@ -142,9 +150,9 @@ function QuestionForm({
         />
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, i) => (
-            <TagCard key={i} href="#">
+            <RemovableTagCard key={i} onRemove={() => removeTag(tag)}>
               {tag}
-            </TagCard>
+            </RemovableTagCard>
           ))}
         </div>
 

@@ -5,13 +5,13 @@ import { notFound } from "next/navigation";
 
 async function page({ params }: { params: Promise<{ id: string }> }) {
   let { id } = await params;
-  let { data: question, success } = await GetQuestion({ questionId: id });
+  let { data, success } = await GetQuestion({ questionId: id });
 
-  if (!success) {
+  if (!success || !data) {
     return notFound();
   }
 
-  return <QuestionForm question={question} isEdit={true} />;
+  return <QuestionForm question={data} isEdit={true} />;
 }
 
 export default page;
