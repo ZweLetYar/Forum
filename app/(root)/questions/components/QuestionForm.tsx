@@ -157,7 +157,7 @@ function QuestionForm({
         </div>
 
         <Button variant="normal" type="submit">
-          {isEdit ? "Edit" : "Create"}
+          {isEdit ? "Update" : "Create"}
         </Button>
       </form>
     </>
