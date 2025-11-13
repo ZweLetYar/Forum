@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Mongoose } from "mongoose";
+import "@/database/index";
 declare global {
   // eslint-disable-next-line no-var
   var mongoose: { conn: Mongoose | null; promise: Promise<Mongoose> | null }; // This must be a `var` and not a `let / const`

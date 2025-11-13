@@ -23,7 +23,7 @@ function QuestionForm({
   const [title, setTitle] = useState(question?.title ?? "");
   const [content, setContent] = useState(question?.content ?? "");
   const [tags, setTags] = useState<string[]>(
-    question?.tags.map((tag) => tag.name)
+    question?.tags.map((tag) => tag.name) ?? []
   );
   const [newTags, setNewTags] = useState("");
 
