@@ -1,15 +1,15 @@
 import React from "react";
-import Input from "../../components/input";
 import Image from "next/image";
 import Button from "@/app/components/Button";
 import AuthForm from "../components/AuthForm";
+import RegisterForm from "../components/RegisterForm";
 
 function page() {
   return (
     <div className="flex  h-screen bg-[#222831] text-white">
-      <div className="flex flex-col items-center justify-center text-lg space-y-10 w-1/2 bg-[#393E46] h-full ">
+      <div className="flex flex-col items-center justify-center text-lg space-y-10 w-1/2  h-full ">
         <div className="flex space-x-5 items-center">
-          <Image src="/logo.png" width={100} height={100} alt="logo" />
+          <Image src="/logo2.png" width={100} height={100} alt="logo" />
           <h1 className="text-6xl font-bold text-white">
             Dev <span className="text-sky-400">Talk</span> Forum
           </h1>
@@ -22,30 +22,12 @@ function page() {
           aliquip ex ea commodo consequat.
         </p>
         <div className="w-5/6">
-          <Button type="outline">Log In</Button>
+          <Button variant="outline">Log In</Button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 items-center justify-center w-1/2 h-full text-lg">
-        <form
-          action=""
-          className="w-3/4 flex flex-col  justify-center space-y-5"
-        >
-          <h1 className="text-xl font-bold">Register to Dev Talk Forum</h1>
-          <div className="w-full">
-            <Input type="text" label="Name" />
-          </div>
-          <div className="w-full">
-            <Input type="text" label="Username" />
-          </div>
-          <div className="w-full">
-            <Input type="email" label="E-mail Address" />
-          </div>
-          <div className="w-full">
-            <Input type="password" label="Password" />
-          </div>
-          <Button type="normal">Register</Button>
-        </form>
+      <div className="flex flex-col gap-4 items-center justify-center w-1/2 h-full text-lg bg-slate-800">
+        <RegisterForm />
         <AuthForm />
       </div>
     </div>

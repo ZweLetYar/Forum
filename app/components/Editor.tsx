@@ -195,6 +195,7 @@ const Editor = ({
       </div>
       <div className="flex items-start ms-3 gap-2">
         <button
+          type="button"
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editor?.isActive("bold") ? "text-sky-400" : ""
@@ -203,6 +204,7 @@ const Editor = ({
           B
         </button>
         <button
+          type="button"
           onClick={() => editor?.chain().focus().toggleItalic().run()}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editor?.isActive("italic") ? "text-sky-400" : ""
@@ -211,6 +213,7 @@ const Editor = ({
           <i>I</i>
         </button>
         <button
+          type="button"
           onClick={() =>
             editor?.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -221,6 +224,7 @@ const Editor = ({
           H1
         </button>
         <button
+          type="button"
           onClick={() =>
             editor?.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -231,6 +235,7 @@ const Editor = ({
           H2
         </button>
         <button
+          type="button"
           onClick={() =>
             editor?.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -241,6 +246,7 @@ const Editor = ({
           H3
         </button>
         <button
+          type="button"
           onClick={setLink}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editorState?.isLink ? "text-sky-400" : ""
@@ -262,6 +268,7 @@ const Editor = ({
           </svg>
         </button>
         <button
+          type="button"
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editor?.isActive("bulletList") ? "text-sky-400" : ""
@@ -283,6 +290,7 @@ const Editor = ({
           </svg>
         </button>
         <button
+          type="button"
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editor?.isActive("orderedList") ? "text-sky-400" : ""
@@ -304,6 +312,7 @@ const Editor = ({
           </svg>
         </button>
         <button
+          type="button"
           onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
           className={`border border-sky-400 px-3 py-1 rounded-lg ${
             editor?.isActive("codeBlock") ? "text-sky-400" : ""

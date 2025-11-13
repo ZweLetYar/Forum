@@ -1,14 +1,20 @@
+// "use client";
+
 import Filter from "../components/Filter";
 
 import ThreadCard from "../components/ThreadCard";
 import ButtonLink from "../components/ButtonLink";
 import ROUTES from "@/routes";
 
+import { auth } from "@/auth";
+
 export default async function page({
   searchParams,
 }: {
   searchParams: Promise<{ search: string | undefined }>;
 }) {
+  const session = await auth();
+  console.log(session);
   const { search } = await searchParams;
 
   return (
@@ -30,7 +36,9 @@ export default async function page({
       <ThreadCard />
       <ThreadCard />
       <ThreadCard />
-      <ThreadCard />
+
+      {session && <p>{session?.user?.name}</p>}
+      {/* <Button onClick={() => api.users.delete(id)}>Delete User</Button> */}
     </div>
   );
 }
