@@ -75,6 +75,7 @@ function QuestionForm({
         content,
         tags,
       });
+      console.log(result);
 
       if (result.success && result.data) {
         toast.success("Question created successfully", {

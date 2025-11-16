@@ -88,31 +88,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               : (user?.name?.toLocaleLowerCase() as string),
         },
       });
+
       return success;
     },
 
     //-------------------
 
-    // async jwt({ token, account }) {
-    //   if (account) {
-    //     const { success, data: accountData } =
-    //       await api.accounts.getByProviderAccountId(account?.providerAccountId);
+    async jwt({ token, account }) {
+      if (account) {
+        const response = await api.accounts.getByProviderAccountId(
+          account?.providerAccountId
+        );
 
-    //     if (!success || !accountData) return token;
-
-    //     const userId = accountData?.userId;
-    //     if (userId) token.sub = userId;
-    //   }
-
-    //   return token;
-    // },
-
-    async jwt({ token, user, account }) {
-      if (user) {
-        token.sub = user.id; // user object from authorize()
+        if (
+          ("success" in response && !response.success) ||
+          ("data" in response && !response.data)
+        )
+          return token;
+        else if ("data" in response) {
+          const userId = response?.data?.userId;
+          if (userId) token.sub = userId;
+        }
       }
+
       return token;
     },
+
+    // async jwt({ token, user, account }) {
+    //   if (user) {
+    //     token.sub = user.id; // user object from authorize()
+    //   }
+    //   return token;
+    // },
 
     //-------------------
 
