@@ -34,7 +34,11 @@ export default async function page({
           return (
             <div className="grid grid-cols-4 gap-4">
               {tags.map((tag, i) => (
-                <TagInfoCard name={tag.name} key={i} />
+                <TagInfoCard
+                  name={tag.name}
+                  questionCount={tag.questions}
+                  key={i}
+                />
               ))}
             </div>
           );
