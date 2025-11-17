@@ -6,7 +6,7 @@ import { IQuestion } from "@/database/question.model";
 
 function ThreadCard({ question }: { question?: IQuestion }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 my-4">
       <div className="flex flex-col gap-3  rounded-md bg-slate-800 p-4">
         <h1>{question?.title}</h1>
         <div className="flex gap-2 items-center text-gray-300">
@@ -19,7 +19,7 @@ function ThreadCard({ question }: { question?: IQuestion }) {
         <div className="flex items-center text-xs text-gray-300">
           <div className="flex items-center gap-1 mr-auto">
             <Image
-              src="/default-avatar.png"
+              src={question?.author.image || "/default-avatar.png"}
               className="rounded-full"
               width={20}
               height={20}

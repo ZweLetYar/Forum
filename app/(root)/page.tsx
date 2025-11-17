@@ -8,6 +8,7 @@ import ROUTES from "@/routes";
 
 import { auth } from "@/auth";
 import { GetQuestions } from "@/lib/actions/GetQuestions.action";
+import DataRenderer from "../components/DataRenderer";
 
 export default async function page({
   searchParams,
@@ -25,7 +26,7 @@ export default async function page({
     filter: filter || "",
   });
 
-  const { questions } = data || {};
+  const { questions = [] } = data || {};
 
   return (
     <div className="px-5 flex flex-col gap-3">
@@ -39,17 +40,14 @@ export default async function page({
       </div>
 
       <Filter />
-      {success && data ? (
-        questions?.length ? (
-          questions?.map((question, i) => (
-            <ThreadCard question={question} key={i} />
-          ))
-        ) : (
-          <p>No questions found.</p>
-        )
-      ) : (
-        <p>{message || "Fail to load questions."}</p>
-      )}
+      <DataRenderer
+        success={success}
+        data={questions}
+        errorMessage={message}
+        render={(questions) =>
+          questions.map((q, i) => <ThreadCard question={q} key={i} />)
+        }
+      />
 
       {session && <p>{session?.user?.name}</p>}
       {/* <Button onClick={() => api.users.delete(id)}>Delete User</Button> */}
