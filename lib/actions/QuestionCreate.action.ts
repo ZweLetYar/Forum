@@ -31,7 +31,7 @@ export async function QuestionCreate(params: {
   const validatedData = validateBody(QuestionCreateSchema, params);
   //@ts-expect-error
   const { title, content, tags } = validatedData;
-  const userId = new mongoose.Types.ObjectId(auth_session?.user?.id);
+  const userId = auth_session?.user?.id;
 
   try {
     let [question] = await Question.create(

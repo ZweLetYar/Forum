@@ -35,9 +35,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const accountRes = await api.accounts.getByProviderAccountId(email);
         console.log("accountRes:", accountRes);
 
-        //@ts-expect-error
         if (!accountRes.success || !accountRes.data) return null;
-        //@ts-expect-error
+
         const existingAccount = accountRes.data;
         console.log("existingAccount:", existingAccount);
 
@@ -45,9 +44,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           existingAccount.data.userId.toString()
         );
         console.log("userRes:", userRes);
-        //@ts-expect-error
+
         if (!userRes.success || !userRes.data) return null;
-        //@ts-expect-error
+
         const existingUser = userRes.data;
         console.log("existingUser:", existingUser);
 
@@ -74,7 +73,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account?.type === "credentials") return true;
       if (!account || !user) return false;
 
-      //@ts-expect-error
       const { success } = await api.auth.signInWithOauth({
         provider: account?.provider,
         providerAccountId: account?.providerAccountId,
@@ -103,10 +101,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (
           ("success" in response && !response.success) ||
           ("data" in response && !response.data)
-        )
+        ) {
+          console.log(response.success);
           return token;
-        else if ("data" in response) {
+        } else if ("data" in response) {
           const userId = response?.data?.userId;
+          console.log("BarnyarTharaka", response);
           if (userId) token.sub = userId;
         }
       }
