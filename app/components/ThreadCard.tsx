@@ -7,7 +7,7 @@ import { IQuestion } from "@/database/question.model";
 function ThreadCard({ question }: { question?: IQuestion }) {
   return (
     <div className="flex flex-col gap-3 my-4">
-      <div className="flex flex-col gap-3  rounded-md bg-slate-800 p-4">
+      <div className="flex flex-col gap-3  rounded-xl bg-[#253044] p-4 hover:bg-[#2A364C] border border-[#2F3A4D]">
         <h1>{question?.title}</h1>
         <div className="flex gap-2 items-center text-gray-300">
           {question?.tags.map((tag) => (

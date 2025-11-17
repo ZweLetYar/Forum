@@ -1,5 +1,6 @@
 const ROUTES = {
   HOME: "/",
+  TAGS: "/tags",
   LOGIN: "/login",
   REGISTER: "/register",
   QUESTIONS: "/questions",

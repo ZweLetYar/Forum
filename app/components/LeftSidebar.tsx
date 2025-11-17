@@ -14,7 +14,7 @@ async function LeftSidebar() {
       <nav className="space-y-6">
         <Link
           href={ROUTES.HOME}
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-[#1A2330] text-[#E8EDF4] border border-[#2F3A4D] font-semibold hover:bg-[#253044] rounded-xl active:bg-[#2FA8FF22] active:border-[#2FA8FF] active:text-[#2FA8FF]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +28,8 @@ async function LeftSidebar() {
           <p>Home</p>
         </Link>
         <Link
-          href={ROUTES.HOME}
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+          href={ROUTES.TAGS}
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-[#1A2330] text-[#E8EDF4] border border-[#2F3A4D] font-semibold hover:bg-[#253044] rounded-xl active:bg-[#2FA8FF22] active:border-[#2FA8FF] active:text-[#2FA8FF]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ async function LeftSidebar() {
         </Link>
         <Link
           href="#"
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-[#1A2330] text-[#E8EDF4] border border-[#2F3A4D] font-semibold hover:bg-[#253044] rounded-xl active:bg-[#2FA8FF22] active:border-[#2FA8FF] active:text-[#2FA8FF]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,8 +75,8 @@ async function LeftSidebar() {
           <p>Newest</p>
         </Link>
         <Link
-          href={ROUTES.QUESTIONS}
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+          href={ROUTES.QUESTIONS_CREATE}
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-[#1A2330] text-[#E8EDF4] border border-[#2F3A4D] font-semibold hover:bg-[#253044] rounded-xl active:bg-[#2FA8FF22] active:border-[#2FA8FF] active:text-[#2FA8FF]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ async function LeftSidebar() {
         </Link>
         <Link
           href="#"
-          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-slate-700 font-semibold hover:bg-sky-400 rounded-xl"
+          className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-[#1A2330] text-[#E8EDF4] border border-[#2F3A4D] font-semibold hover:bg-[#253044] rounded-xl active:bg-[#2FA8FF22] active:border-[#2FA8FF] active:text-[#2FA8FF]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ async function LeftSidebar() {
           >
             <button
               type="submit"
-              className="flex items-center space-x-4 h-12  w-full mx-2 px-3 border border-red-500 font-semibold hover:bg-red-400 rounded-xl"
+              className="flex items-center space-x-4 h-12  w-full mx-2 px-3 bg-transparent border border-[#F4717480] text-[#F47174] hover:bg-[#F4717415] font-semibold  rounded-xl"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
