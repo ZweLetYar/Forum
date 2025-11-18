@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 async function iconExists(url: string) {
   try {
@@ -10,9 +11,11 @@ async function iconExists(url: string) {
 }
 
 export default async function DevIcon({
+  id,
   name,
   questionCount,
 }: {
+  id: string;
   name: string;
   questionCount: number;
 }) {
@@ -27,11 +30,21 @@ export default async function DevIcon({
   const finalUrl = originalExists ? originalUrl : plainUrl;
 
   return (
-    <div className="flex flex-col gap-1 justify-center items-center bg-[#222831] p-4 rounded-xl">
-      <Image src={finalUrl} width={100} height={100} alt={name || "devicon"} />
-      <p>
-        {name}-({questionCount})
-      </p>
+    <div>
+      <Link
+        href={`/tags/${id}`}
+        className="flex flex-col gap-1 justify-center items-center bg-[#222831] p-4 rounded-xl"
+      >
+        <Image
+          src={finalUrl}
+          width={100}
+          height={100}
+          alt={name || "devicon"}
+        />
+        <p>
+          {name}-({questionCount})
+        </p>
+      </Link>
     </div>
   );
 }

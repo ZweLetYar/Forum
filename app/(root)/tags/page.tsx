@@ -35,6 +35,7 @@ export default async function page({
             <div className="grid grid-cols-4 gap-4">
               {tags.map((tag, i) => (
                 <TagInfoCard
+                  id={tag._id.toString()}
                   name={tag.name}
                   questionCount={tag.questions}
                   key={i}

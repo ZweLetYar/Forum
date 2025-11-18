@@ -65,8 +65,6 @@ export async function GetQuestions(params: {
   }
 
   try {
-    const totalQuestion = await Question.countDocuments(filterQuery);
-
     const questions = await Question.find(filterQuery)
       .populate("author", "name image")
       .populate("tags", "name")
@@ -74,6 +72,8 @@ export async function GetQuestions(params: {
       .sort(sortCreteria)
       .skip(skip)
       .limit(limit);
+
+    const totalQuestion = await Question.countDocuments(filterQuery);
 
     const isNext = totalQuestion > questions.length + skip;
 
