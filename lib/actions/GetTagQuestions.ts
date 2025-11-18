@@ -18,7 +18,7 @@ const GetTagQuestions = async (params: {
   success: boolean;
   data?: {
     tag: ITagDoc;
-    questions: IQuestionDoc;
+    questions: IQuestionDoc[];
     isNext: boolean;
   };
   message?: string;
@@ -44,7 +44,7 @@ const GetTagQuestions = async (params: {
     };
 
     if (search) {
-      filterQuery.title = { $regex: search, $option: "i" };
+      filterQuery.title = { $regex: search, $options: "i" };
     }
 
     const questions = await Question.find(filterQuery)

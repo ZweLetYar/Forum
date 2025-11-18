@@ -16,8 +16,8 @@ export default async function DevIcon({
   questionCount,
 }: {
   id: string;
-  name: string;
-  questionCount: number;
+  name?: string;
+  questionCount?: number;
 }) {
   const slug = name?.toLowerCase();
 
