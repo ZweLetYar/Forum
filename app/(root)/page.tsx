@@ -16,7 +16,7 @@ export default async function page({
   searchParams: Promise<{ [key: string]: string }>;
 }) {
   const session = await auth();
-  console.log(session);
+
   const { page, pageSize, search, filter } = await searchParams;
 
   const { success, data, message } = await GetQuestions({
