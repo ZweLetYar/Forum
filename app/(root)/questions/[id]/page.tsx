@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import TagCard from "@/app/components/TagCard";
 import { GetQuestion } from "@/lib/actions/GetQuestion.action";
+import Preview from "@/app/components/Preview";
 
 function formatDate(iso?: string) {
   if (!iso) return "";
@@ -91,7 +92,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
       </header>
 
       <main className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <aside className="lg:col-span-3 hidden lg:block">
+        {/* <aside className="lg:col-span-3 hidden lg:block">
           <div className="rounded-xl border border-[#243041] p-4 bg-[#0b1117]">
             <div className="text-sm text-gray-300">Stats</div>
             <div className="mt-3 text-gray-100">
@@ -100,13 +101,13 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               <div>Downvotes: {question?.downvotes ?? 0}</div>
             </div>
           </div>
-        </aside>
+        </aside> */}
 
-        <section className="lg:col-span-9">
-          <article className="prose prose-invert max-w-none bg-[#0b1117] rounded-xl p-6 border border-[#243041]">
+        <section className="lg:col-span-12">
+          <article className="max-w-none bg-[#0b1117] rounded-xl p-6 border border-[#243041]">
             {/* If content is saved as HTML, render it. Otherwise show plain text */}
             {question?.content ? (
-              <div dangerouslySetInnerHTML={{ __html: question.content }} />
+              <Preview content={question.content} />
             ) : (
               <p className="text-gray-300">No content available.</p>
             )}
