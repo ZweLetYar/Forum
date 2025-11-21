@@ -3,6 +3,8 @@ import Link from "next/link";
 import TagCard from "@/app/components/TagCard";
 import { GetQuestion } from "@/lib/actions/GetQuestion.action";
 import Preview from "@/app/components/Preview";
+import IncreaseViewCount from "@/lib/actions/IncreaseViewCount";
+import { after } from "next/server";
 
 function formatDate(iso?: string) {
   if (!iso) return "";
@@ -15,7 +17,24 @@ function formatDate(iso?: string) {
 
 async function page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+
+  //option 1 => sequential
+  // await IncreaseViewCount({ questionId: id });
+  // const { success, data: question } = await GetQuestion({ questionId: id });
+  //-------------------------------
+
+  //option 2 => parallel
+  // const [response1, { success, data: question }] =await Promise.all([
+  //   await IncreaseViewCount({ questionId: id }),
+  //   await GetQuestion({ questionId: id }),
+  // ]);
+  //-------------------------------
+
+  //option 3 => use after
   const { success, data: question } = await GetQuestion({ questionId: id });
+  after(async () => {
+    await IncreaseViewCount({ questionId: id });
+  });
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -37,10 +56,11 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
             </div>
             <div className="text-sm text-gray-400">votes</div>
             <div className="h-4" />
+
             <div className="text-2xl font-bold text-gray-100">
-              {question?.answers ?? 0}
+              {question?.views ?? 0}
             </div>
-            <div className="text-sm text-gray-400">answers</div>
+            <div className="text-sm text-gray-400">views</div>
           </div>
 
           <div className="flex-1">
