@@ -11,7 +11,7 @@ export default async function page({
 
   const { success, data, message } = await GetTags({
     page: Number(page) || 1,
-    pageSize: Number(pageSize) || 10,
+    pageSize: Number(pageSize) || 20,
     search: search || "",
     filter: filter || "",
   });
