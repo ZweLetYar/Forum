@@ -21,18 +21,37 @@ interface PreviewProps {
   content: string;
 }
 
+function decodeEntities(input: string) {
+  return input
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 export default function Preview({ content }: PreviewProps) {
-  // Parse <pre><code> blocks and highlight them
-  const highlightedContent = content.replace(
+  // First decode HTML entities so tags like <ul>/<ol> render correctly
+  const decoded = decodeEntities(content);
+
+  // Then highlight any <pre><code> blocks
+  const highlightedContent = decoded.replace(
     /<pre><code(?: class="language-(.*?)")?>([\s\S]*?)<\/code><\/pre>/gi,
     (_, lang, code) => {
-      const decoded = code
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&amp;/g, "&");
-      const highlighted = lang
-        ? hljs.highlight(decoded, { language: lang }).value
-        : hljs.highlightAuto(decoded).value;
+      const raw = decodeEntities(code);
+      let highlighted = "";
+      try {
+        if (lang) {
+          // safe check if language exists in hljs
+          if ((hljs as any).getLanguage && (hljs as any).getLanguage(lang)) {
+            highlighted = hljs.highlight(raw, { language: lang }).value;
+          } else {
+            highlighted = hljs.highlightAuto(raw).value;
+          }
+        } else {
+          highlighted = hljs.highlightAuto(raw).value;
+        }
+      } catch (e) {
+        highlighted = raw;
+      }
       return `<pre class="hljs"><code>${highlighted}</code></pre>`;
     }
   );

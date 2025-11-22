@@ -5,8 +5,11 @@ import { GetQuestion } from "@/lib/actions/GetQuestion.action";
 import Preview from "@/app/components/Preview";
 import IncreaseViewCount from "@/lib/actions/IncreaseViewCount";
 import { after } from "next/server";
-import Editor from "@/app/components/Editor";
+
 import AnswerForm from "../components/AnswerForm";
+import AnswerCard from "../components/AnswerCard";
+import { GetAnswers } from "@/lib/actions/GetAnswers.action";
+import DataRenderer from "@/app/components/DataRenderer";
 
 function formatDate(iso?: string) {
   if (!iso) return "";
@@ -33,7 +36,17 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   //-------------------------------
 
   //option 3 => after
-  const { success, data: question } = await GetQuestion({ questionId: id });
+  const [{ data: question }, { success, data, message, details }] =
+    await Promise.all([
+      await GetQuestion({ questionId: id }),
+      await GetAnswers({
+        questionId: id,
+        page: 1,
+        pageSize: 5,
+        filter: "newest",
+      }),
+    ]);
+  const { answers = [] } = data || {};
   after(async () => {
     await IncreaseViewCount({ questionId: id });
   });
@@ -137,14 +150,29 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
 
           <div className="mt-6">
             <h2 className="text-lg font-semibold text-white mb-3">Answers</h2>
-            <div className="text-gray-400">
+            <div className="text-gray-400 mb-4">
               {question?.answers ?? 0} answers
             </div>
-            {/* TODO: render answers list here */}
-          </div>
 
-          <div className="mt-6">
-            <AnswerForm questionId={id} />
+            <div className="space-y-3">
+              <DataRenderer
+                success={success}
+                data={answers}
+                errorMessage={message}
+                render={(answers) =>
+                  answers.map((answer: any, i: number) => (
+                    <AnswerCard
+                      key={(answer && (answer._id ?? i)) || i}
+                      answer={answer}
+                    />
+                  ))
+                }
+              />
+            </div>
+
+            <div className="mt-6">
+              <AnswerForm questionId={id} />
+            </div>
           </div>
         </section>
       </main>

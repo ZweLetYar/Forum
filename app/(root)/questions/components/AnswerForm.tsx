@@ -16,7 +16,7 @@ function AnswerForm({ questionId }: { questionId: string }) {
       questionId,
       answerContent: content,
     });
-
+    setContent("");
     if (success && data) {
       toast.success("Answer submitted successfully", {
         position: "bottom-right",

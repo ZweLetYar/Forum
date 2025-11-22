@@ -14,6 +14,8 @@ export async function GetAnswers(params: {
 }): Promise<{
   success: boolean;
   data?: { answers: IAnswerDoc[]; totalAnswers: number; isNext: boolean };
+  message?: string | undefined;
+  details?: object | null;
 }> {
   await dbConnect();
 
