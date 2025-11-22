@@ -8,7 +8,7 @@ export default async function fetchHandler(
   url: string,
   options: FetchOptions = {}
 ) {
-  const { timeout = 30000, headers: customHeaders, ...restOptions } = options;
+  const { timeout = 50000, headers: customHeaders, ...restOptions } = options;
 
   const controller = new AbortController();
 

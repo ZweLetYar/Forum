@@ -41,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.log("existingAccount:", existingAccount);
 
         const userRes = await api.users.getById(
-          existingAccount.data.userId.toString()
+          existingAccount.userId.toString()
         );
         console.log("userRes:", userRes);
 
@@ -50,18 +50,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const existingUser = userRes.data;
         console.log("existingUser:", existingUser);
 
-        const ok = await bcrypt.compare(
-          password,
-          existingAccount.data.password
-        );
+        const ok = await bcrypt.compare(password, existingAccount.password);
         if (!ok) return null;
         console.log("password valid:", ok);
 
         return {
-          id: existingUser.data._id,
-          name: existingUser.data.name,
-          email: existingUser.data.email,
-          image: existingUser.data.image,
+          id: existingUser._id,
+          name: existingUser.name,
+          email: existingUser.email,
+          image: existingUser.image,
         };
       },
     }),

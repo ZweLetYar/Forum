@@ -5,6 +5,8 @@ import { GetQuestion } from "@/lib/actions/GetQuestion.action";
 import Preview from "@/app/components/Preview";
 import IncreaseViewCount from "@/lib/actions/IncreaseViewCount";
 import { after } from "next/server";
+import Editor from "@/app/components/Editor";
+import AnswerForm from "../components/AnswerForm";
 
 function formatDate(iso?: string) {
   if (!iso) return "";
@@ -30,7 +32,7 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   // ]);
   //-------------------------------
 
-  //option 3 => use after
+  //option 3 => after
   const { success, data: question } = await GetQuestion({ questionId: id });
   after(async () => {
     await IncreaseViewCount({ questionId: id });
@@ -139,6 +141,10 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
               {question?.answers ?? 0} answers
             </div>
             {/* TODO: render answers list here */}
+          </div>
+
+          <div className="mt-6">
+            <AnswerForm questionId={id} />
           </div>
         </section>
       </main>

@@ -193,7 +193,7 @@ const Editor = ({
       <div className="ms-3 mb-2">
         {label && <label className=" font-semibold ">{label}</label>}
       </div>
-      <div className="flex items-start ms-3 gap-2">
+      <div className="flex items-start ms-3 gap-2 mb-4">
         <button
           type="button"
           onClick={() => editor?.chain().focus().toggleBold().run()}

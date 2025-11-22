@@ -15,7 +15,7 @@ function Button({
       {...props}
       className={` ${
         props.className || "w-full"
-      } py-3  rounded-lg  cursor-pointer hover:bg-sky-700 ${
+      } py-3 px-2 rounded-lg  cursor-pointer hover:bg-sky-700 ${
         icon ? "flex items-center justify-center space-x-3" : ""
       } ${variant == "normal" ? "bg-sky-600" : "border border-sky-600"}`}
     >

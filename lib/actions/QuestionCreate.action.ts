@@ -68,9 +68,9 @@ export async function QuestionCreate(params: {
 
     return { success: true, data: JSON.parse(JSON.stringify(question)) };
   } catch (e) {
-    session.abortTransaction();
+    await session.abortTransaction();
     return actionError(e);
   } finally {
-    session.endSession();
+    await session.endSession();
   }
 }
