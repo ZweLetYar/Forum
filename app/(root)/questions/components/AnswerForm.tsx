@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { Bounce, toast } from "react-toastify";
 
 function AnswerForm({ questionId }: { questionId: string }) {
-  const [content, setContent] = useState("");
+  let [content, setContent] = useState("");
   const router = useRouter();
   const submitAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,8 +16,9 @@ function AnswerForm({ questionId }: { questionId: string }) {
       questionId,
       answerContent: content,
     });
-    setContent("");
+
     if (success && data) {
+      setContent("");
       toast.success("Answer submitted successfully", {
         position: "bottom-right",
         autoClose: 3000,

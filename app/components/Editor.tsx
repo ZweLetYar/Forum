@@ -17,7 +17,7 @@ import html from "highlight.js/lib/languages/xml";
 // load all languages with "all" or common languages with "common"
 import { all, createLowlight } from "lowlight";
 import "highlight.js/styles/atom-one-dark.css";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import "./editorStyle.css";
 
 // create a lowlight instance with all languages loaded
@@ -145,6 +145,23 @@ const Editor = ({
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   });
+
+  // keep editor content in sync when `value` prop changes from outside
+  useEffect(() => {
+    if (!editor) return;
+    if (value === undefined || value === null) return;
+    // avoid unnecessary updates when same HTML is already present
+    try {
+      const current = editor.getHTML();
+      if (current !== value) {
+        // use setContent to preserve document structure
+        editor.commands.setContent(value, false);
+      }
+    } catch (e) {
+      editor.commands.clearContent();
+      // ignore
+    }
+  }, [value, editor]);
 
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes("link").href;
