@@ -5,6 +5,7 @@ import { GetQuestion } from "@/lib/actions/GetQuestion.action";
 import Preview from "@/app/components/Preview";
 import IncreaseViewCount from "@/lib/actions/IncreaseViewCount";
 import { after } from "next/server";
+import QuestionVote from "@/app/components/QuestionVote";
 
 import AnswerForm from "../components/AnswerForm";
 import AnswerCard from "../components/AnswerCard";
@@ -66,12 +67,12 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
       <header className="bg-[#0f1724] rounded-xl p-6 mb-6 border border-[#243041]">
         <div className="flex items-start gap-6">
           <div className="flex-shrink-0 hidden sm:flex flex-col items-center text-center">
-            <div className="text-2xl font-bold text-sky-500">
-              {question?.upvotes ?? 0}
-            </div>
-            <div className="text-sm text-gray-400">votes</div>
+            <QuestionVote
+              questionId={id}
+              initialUpvotes={question?.upvotes ?? 0}
+              initialDownvotes={question?.downvotes ?? 0}
+            />
             <div className="h-4" />
-
             <div className="text-2xl font-bold text-gray-100">
               {question?.views ?? 0}
             </div>
