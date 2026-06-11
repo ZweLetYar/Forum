@@ -1,13 +1,13 @@
 "use server";
 
-import Question, { IQuestionDoc } from "@/database/question.model";
 import dbConnect from "../dbConnect";
 import validateBody from "../vaildateBody";
 import PaginatedSearchParamsSchema from "../schemas/PaginatedSearchParamsSchema";
 import { FilterQuery } from "mongoose";
 import { actionError } from "../response";
+import Tag, { ITagDoc } from "@/database/tag.model";
 
-export async function GetQuestions(params: {
+export async function GetTags(params: {
   page?: number;
   pageSize?: number;
   search?: string;
@@ -15,7 +15,7 @@ export async function GetQuestions(params: {
   sort?: string;
 }): Promise<{
   data?: {
-    questions: IQuestionDoc[];
+    tags: ITagDoc[];
     isNext: boolean;
   };
   success: boolean;
@@ -31,56 +31,48 @@ export async function GetQuestions(params: {
   const skip = (Number(page) - 1) * pageSize;
   const limit = Number(pageSize);
 
-  const filterQuery: FilterQuery<typeof Question> = {};
-
-  //will implement later
-  if (filter === "recommended") {
-    return { success: true, data: { questions: [], isNext: false } };
-  }
+  const filterQuery: FilterQuery<typeof Tag> = {};
 
   if (search) {
-    filterQuery.$or = [
-      { title: { $regex: search, $options: "i" } },
-      { content: { $regex: search, $options: "i" } },
-    ];
+    filterQuery.$or = [{ name: { $regex: search, $options: "i" } }];
   }
 
   let sortCreteria: {};
 
   switch (filter) {
-    case "newest":
+    case "recent":
       sortCreteria = { createdAt: -1 };
       break;
-    case "unanswered":
-      filterQuery.answers = 0;
-      sortCreteria = { createdAt: -1 };
+    case "oldest":
+      sortCreteria = { createdAt: 1 };
       break;
     case "popular":
-      sortCreteria = { upvote: -1 };
+      sortCreteria = { questions: -1 };
+      break;
+    case "name":
+      sortCreteria = { name: 1 };
       break;
 
     default:
-      sortCreteria = { createdAt: -1 };
+      sortCreteria = { questions: -1 };
       break;
   }
 
   try {
-    const questions = await Question.find(filterQuery)
-      .populate("author", "name image")
-      .populate("tags", "name")
+    const totalTag = await Tag.countDocuments(filterQuery);
+
+    const tags = await Tag.find(filterQuery)
       .lean()
       .sort(sortCreteria)
       .skip(skip)
       .limit(limit);
 
-    const totalQuestion = await Question.countDocuments(filterQuery);
-
-    const isNext = totalQuestion > questions.length + skip;
+    const isNext = totalTag > tags.length + skip;
 
     return {
       success: true,
       data: {
-        questions: JSON.parse(JSON.stringify(questions)),
+        tags: JSON.parse(JSON.stringify(tags)),
         isNext,
       },
     };

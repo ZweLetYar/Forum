@@ -1,11 +1,11 @@
 import z from "zod";
 
-const PaginatedSearchParamsSchema = z.object({
+const GetTagQuestionSchema = z.object({
   page: z.number().int().positive().optional().default(1),
   pageSize: z.number().int().positive().max(100).optional().default(10),
   search: z.string().trim().max(100).optional(),
-  filter: z.string().trim().optional(),
   sort: z.string().trim().optional(),
+  tagId: z.string(),
 });
 
-export default PaginatedSearchParamsSchema;
+export default GetTagQuestionSchema;

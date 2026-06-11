@@ -35,34 +35,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const accountRes = await api.accounts.getByProviderAccountId(email);
         console.log("accountRes:", accountRes);
 
-        //@ts-expect-error
         if (!accountRes.success || !accountRes.data) return null;
-        //@ts-expect-error
+
         const existingAccount = accountRes.data;
         console.log("existingAccount:", existingAccount);
 
         const userRes = await api.users.getById(
-          existingAccount.data.userId.toString()
+          existingAccount.userId.toString()
         );
         console.log("userRes:", userRes);
-        //@ts-expect-error
+
         if (!userRes.success || !userRes.data) return null;
-        //@ts-expect-error
+
         const existingUser = userRes.data;
         console.log("existingUser:", existingUser);
 
-        const ok = await bcrypt.compare(
-          password,
-          existingAccount.data.password
-        );
+        const ok = await bcrypt.compare(password, existingAccount.password);
         if (!ok) return null;
         console.log("password valid:", ok);
 
         return {
-          id: existingUser.data._id,
-          name: existingUser.data.name,
-          email: existingUser.data.email,
-          image: existingUser.data.image,
+          id: existingUser._id,
+          name: existingUser.name,
+          email: existingUser.email,
+          image: existingUser.image,
         };
       },
     }),
@@ -74,7 +70,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account?.type === "credentials") return true;
       if (!account || !user) return false;
 
-      //@ts-expect-error
       const { success } = await api.auth.signInWithOauth({
         provider: account?.provider,
         providerAccountId: account?.providerAccountId,
@@ -88,31 +83,40 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               : (user?.name?.toLocaleLowerCase() as string),
         },
       });
+
       return success;
     },
 
     //-------------------
 
-    // async jwt({ token, account }) {
-    //   if (account) {
-    //     const { success, data: accountData } =
-    //       await api.accounts.getByProviderAccountId(account?.providerAccountId);
+    async jwt({ token, account }) {
+      if (account) {
+        const response = await api.accounts.getByProviderAccountId(
+          account?.providerAccountId
+        );
 
-    //     if (!success || !accountData) return token;
-
-    //     const userId = accountData?.userId;
-    //     if (userId) token.sub = userId;
-    //   }
-
-    //   return token;
-    // },
-
-    async jwt({ token, user, account }) {
-      if (user) {
-        token.sub = user.id; // user object from authorize()
+        if (
+          ("success" in response && !response.success) ||
+          ("data" in response && !response.data)
+        ) {
+          console.log(response.success);
+          return token;
+        } else if ("data" in response) {
+          const userId = response?.data?.userId;
+          console.log("BarnyarTharaka", response);
+          if (userId) token.sub = userId;
+        }
       }
+
       return token;
     },
+
+    // async jwt({ token, user, account }) {
+    //   if (user) {
+    //     token.sub = user.id; // user object from authorize()
+    //   }
+    //   return token;
+    // },
 
     //-------------------
 

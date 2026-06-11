@@ -17,7 +17,7 @@ import html from "highlight.js/lib/languages/xml";
 // load all languages with "all" or common languages with "common"
 import { all, createLowlight } from "lowlight";
 import "highlight.js/styles/atom-one-dark.css";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import "./editorStyle.css";
 
 // create a lowlight instance with all languages loaded
@@ -146,6 +146,23 @@ const Editor = ({
     immediatelyRender: false,
   });
 
+  // keep editor content in sync when `value` prop changes from outside
+  useEffect(() => {
+    if (!editor) return;
+    if (value === undefined || value === null) return;
+    // avoid unnecessary updates when same HTML is already present
+    try {
+      const current = editor.getHTML();
+      if (current !== value) {
+        // use setContent to preserve document structure
+        editor.commands.setContent(value, false);
+      }
+    } catch (e) {
+      editor.commands.clearContent();
+      // ignore
+    }
+  }, [value, editor]);
+
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes("link").href;
     const url = window.prompt("URL", previousUrl);
@@ -193,7 +210,7 @@ const Editor = ({
       <div className="ms-3 mb-2">
         {label && <label className=" font-semibold ">{label}</label>}
       </div>
-      <div className="flex items-start ms-3 gap-2">
+      <div className="flex items-start ms-3 gap-2 mb-4">
         <button
           type="button"
           onClick={() => editor?.chain().focus().toggleBold().run()}

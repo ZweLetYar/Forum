@@ -8,7 +8,7 @@ export default async function fetchHandler(
   url: string,
   options: FetchOptions = {}
 ) {
-  const { timeout = 30000, headers: customHeaders, ...restOptions } = options;
+  const { timeout = 50000, headers: customHeaders, ...restOptions } = options;
 
   const controller = new AbortController();
 
@@ -30,30 +30,30 @@ export default async function fetchHandler(
     signal: controller.signal,
   };
 
-  // try {
-  //   const res = await fetch(url, config);
-  //   clearTimeout(id);
-  //   if (!res.ok) {
-  //     throw new Error("HTTP ERROR");
-  //   }
-
-  //   return await res.json();
-  // } catch (e) {
-  //   return handleErrorResponse(e);
-  // }
-
   try {
     const res = await fetch(url, config);
     clearTimeout(id);
-
-    const data = await res.json().catch(() => ({}));
-
     if (!res.ok) {
-      return { success: false, status: res.status, data };
+      throw new Error("HTTP ERROR");
     }
 
-    return { success: true, data };
+    return await res.json();
   } catch (e) {
     return handleErrorResponse(e);
   }
+
+  // try {
+  //   const res = await fetch(url, config);
+  //   clearTimeout(id);
+
+  //   const data = await res.json().catch(() => ({}));
+
+  //   if (!res.ok) {
+  //     return { success: false, status: res.status, data };
+  //   }
+
+  //   return { success: true, data };
+  // } catch (e) {
+  //   return handleErrorResponse(e);
+  // }
 }

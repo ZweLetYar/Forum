@@ -20,7 +20,10 @@ export async function GetQuestion(params: { questionId: string }): Promise<{
   const { questionId } = validatedData;
 
   try {
-    const question = await Question.findById(questionId).populate("tags");
+    const question = await Question.findById(questionId)
+      .populate("tags")
+      .populate("author", "_id name image")
+      .lean();
     if (!question) throw new Error("Fail to get a question!");
 
     return { success: true, data: JSON.parse(JSON.stringify(question)) };

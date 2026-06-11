@@ -42,7 +42,7 @@ function Filter() {
         React
       </button>
       <button
-        onClick={() => handleFilter("Vue")}
+        onClick={() => handleFilter("Vuejs")}
         className={` text-white px-3 py-1 rounded-md cursor-pointer ${
           active === "Vue" ? "bg-sky-400" : "bg-slate-700"
         }`}
